@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thailand Post — QR Identity v4</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:   #CC0000; --red2:  #A30000;
+  --navy:  #1A2B4A; --nv2:   #243660;
+  --grn:   #15803D; --gold:  #B45309;
+  --teal:  #0E7490;
+  --g2: #6B7280; --g3: #E5E7EB; --g4: #F3F4F6; --g5: #F9FAFB;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'IBM Plex Sans Thai',sans-serif;
+  background:#fff;color:#111827;
+  padding:40px 32px 80px;
+}
+
+/* ── PAGE HEADER ── */
+.phdr{
+  max-width:1300px;margin:0 auto 36px;
+  padding-bottom:18px;border-bottom:2px solid var(--g4);
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.logo-box{
+  width:46px;height:46px;background:var(--red);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:23px;
+  box-shadow:0 4px 14px rgba(204,0,0,0.2);flex-shrink:0;
+}
+.hdr-t h1{font-size:20px;font-weight:700;color:var(--navy);}
+.hdr-t p{font-size:12px;color:var(--g2);margin-top:3px;}
+.hdr-tag{
+  margin-left:auto;font-size:11px;color:var(--g2);
+  background:var(--g4);border:1px solid var(--g3);
+  border-radius:100px;padding:4px 13px;
+}
+
+/* ── SECTION ── */
+.section{max-width:1300px;margin:0 auto 52px;}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;margin-bottom:22px;
+  padding-bottom:12px;border-bottom:2px solid var(--g3);
+}
+.sec-pill{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 13px;border-radius:100px;color:white;}
+.sec-title{font-size:17px;font-weight:700;color:var(--navy);}
+.sec-note{font-size:12px;color:var(--g2);}
+
+/* ── SWIM LANE ── */
+.swimlane{
+  border:1.5px solid var(--g3);border-radius:14px;overflow:hidden;
+  margin-bottom:0;
+}
+.lane-grid{display:grid;grid-template-columns:1fr 1fr 1fr;}
+.lane-hdr{
+  padding:10px 16px;font-size:11px;font-weight:700;
+  letter-spacing:0.5px;text-transform:uppercase;
+  border-bottom:1.5px solid var(--g3);
+}
+.lane-body{padding:16px 14px;min-height:360px;position:relative;}
+.lane-hdr:not(:last-child),.lane-body:not(:last-child){border-right:1.5px solid var(--g3);}
+
+/* node */
+.node{
+  display:flex;align-items:flex-start;gap:9px;
+  margin-bottom:0;padding:10px 11px;border-radius:10px;border:1.5px solid;
+}
+.nnum{
+  width:22px;height:22px;min-width:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:white;
+}
+.nt{font-size:11px;font-weight:700;line-height:1.3;}
+.ns{font-size:9px;margin-top:3px;line-height:1.5;}
+.vline{width:2px;height:18px;background:var(--g3);margin:4px 0 4px 21px;}
+.vline-cross{display:flex;align-items:center;margin:2px 0 2px 10px;}
+.vc-arrow{font-size:11px;color:var(--g3);}
+
+/* ── PHONE FRAME ── */
+.phones-row{display:flex;gap:0;align-items:flex-start;overflow-x:auto;padding-bottom:4px;}
+.unit{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.unit-lbl{margin-top:11px;font-size:11px;font-weight:600;color:var(--g2);}
+.unit-sub{font-size:9px;color:#9CA3AF;margin-top:2px;text-align:center;max-width:180px;}
+.conn{display:flex;flex-direction:column;align-items:center;padding-top:130px;width:42px;flex-shrink:0;}
+.cline{width:20px;height:2px;background:var(--g3);}
+.carrow{font-size:11px;color:var(--g3);}
+
+.phone{
+  width:204px;background:#28282F;border-radius:36px;padding:8px;
+  box-shadow:0 8px 28px rgba(0,0,0,0.13),0 2px 6px rgba(0,0,0,0.07);
+}
+.screen{
+  background:white;border-radius:28px;overflow:hidden;
+  height:408px;display:flex;flex-direction:column;
+}
+.notch{width:64px;height:17px;background:#28282F;border-radius:0 0 11px 11px;margin:0 auto;flex-shrink:0;z-index:5;}
+.sb{display:flex;justify-content:space-between;padding:5px 13px 3px;font-size:9px;font-weight:600;font-family:'IBM Plex Mono',monospace;color:var(--navy);flex-shrink:0;}
+.sb.inv{color:rgba(255,255,255,0.85);}
+.body{flex:1;overflow:hidden;padding:0 11px 11px;display:flex;flex-direction:column;}
+.topbar{display:flex;align-items:center;gap:6px;padding:7px 11px;flex-shrink:0;}
+.back{width:24px;height:24px;border-radius:50%;background:var(--g4);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--navy);}
+.tbar-t{flex:1;text-align:center;font-size:12px;font-weight:700;color:var(--navy);}
+.tbar-r{width:24px;}
+.bnav{display:flex;justify-content:space-around;padding:5px 0 8px;border-top:1px solid var(--g3);background:white;flex-shrink:0;}
+.bi{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:8px;color:var(--g2);font-weight:500;}
+.bi.on{color:var(--red);}
+.bidot{width:3px;height:3px;border-radius:50%;background:var(--red);}
+
+/* hero */
+.hero{background:var(--red);padding:12px 11px 16px;flex-shrink:0;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,0.07);top:-25px;right:-18px;}
+.hero-row{display:flex;align-items:center;gap:7px;position:relative;z-index:1;}
+.hero-icon{width:24px;height:24px;background:white;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.hero-name{font-size:10px;font-weight:700;color:white;}
+.hero-sub-txt{font-size:8px;color:rgba(255,255,255,0.5);}
+.hero-title{font-size:14px;font-weight:700;color:white;margin-top:8px;position:relative;z-index:1;}
+.hero-s{font-size:9px;color:rgba(255,255,255,0.65);margin-top:1px;position:relative;z-index:1;}
+
+/* components */
+.card{background:white;border-radius:10px;padding:10px;margin-bottom:7px;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.btn{border:none;border-radius:9px;padding:10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;width:100%;margin-bottom:6px;}
+.btn-r{background:var(--red);color:white;}
+.btn-g{background:var(--g4);color:var(--navy);}
+.tag{display:inline-flex;align-items:center;padding:2px 6px;border-radius:100px;font-size:8px;font-weight:700;}
+.tg{background:#D1FAE5;color:#065F46;}
+.tb{background:#DBEAFE;color:#1E40AF;}
+.ty{background:#FEF3C7;color:#92400E;}
+.tr2{background:#FEE2E2;color:#991B1B;}
+.info{background:var(--g4);border-radius:8px;padding:8px 9px;font-size:9px;color:var(--g2);line-height:1.6;margin-bottom:8px;}
+.sec-lbl{font-size:9px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.8px;margin:7px 0 5px;}
+.inplbl{font-size:9px;font-weight:600;color:var(--navy);margin-bottom:3px;display:block;}
+.inp{background:var(--g4);border:1.5px solid var(--g3);border-radius:8px;padding:7px 10px;font-size:11px;color:var(--g2);width:100%;font-family:inherit;margin-bottom:7px;}
+.inp.f{border-color:var(--red);}
+.divider{height:1px;background:var(--g3);margin:7px 0;}
+
+/* branch camera screen */
+.cam-zone{
+  background:var(--navy);border-radius:11px;height:105px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;margin-bottom:8px;
+}
+.cam-corner{position:absolute;width:18px;height:18px;border-style:solid;border-color:var(--red);border-width:0;}
+.tl{top:9px;left:9px;border-top-width:2px;border-left-width:2px;}
+.tr{top:9px;right:9px;border-top-width:2px;border-right-width:2px;}
+.bl{bottom:9px;left:9px;border-bottom-width:2px;border-left-width:2px;}
+.br{bottom:9px;right:9px;border-bottom-width:2px;border-right-width:2px;}
+.scan-beam{width:90px;height:1.5px;background:linear-gradient(90deg,transparent,var(--red),transparent);}
+
+/* vc card */
+.vc{background:linear-gradient(135deg,var(--navy),var(--nv2));border-radius:12px;padding:11px;color:white;margin-bottom:8px;position:relative;overflow:hidden;}
+.vc::before{content:'';position:absolute;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,0.04);top:-18px;right:-12px;}
+.vc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.vc-iss{font-size:7px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;}
+.vc-org{font-size:10px;font-weight:700;color:white;margin-top:1px;}
+.vc-badge{background:var(--red);color:white;font-size:7px;font-weight:700;padding:2px 6px;border-radius:100px;text-transform:uppercase;}
+.vc-name{font-size:12px;font-weight:600;color:white;}
+.vc-id{font-size:8px;color:rgba(255,255,255,0.3);font-family:'IBM Plex Mono',monospace;margin-top:2px;}
+.vc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,0.1);}
+.vc-exp{font-size:7px;color:rgba(255,255,255,0.4);}
+.vc-exp span{color:#FCA5A5;font-weight:600;}
+.qr-wrap{background:white;border-radius:10px;padding:11px;display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid var(--g3);margin-bottom:7px;}
+.success-ring{width:48px;height:48px;border-radius:50%;background:#D1FAE5;display:flex;align-items:center;justify-content:center;font-size:24px;margin:4px auto 9px;}
+
+/* ── WEB PORTAL ── */
+.portal-row{display:flex;gap:20px;overflow-x:auto;padding-bottom:8px;align-items:flex-start;}
+.portal-card{
+  flex-shrink:0;width:640px;
+  border:1.5px solid var(--g3);border-radius:14px;overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.06);
+}
+.portal-bar{
+  background:var(--navy);padding:9px 16px;
+  display:flex;align-items:center;gap:10px;
+}
+.pdots{display:flex;gap:5px;}
+.pd{width:9px;height:9px;border-radius:50%;}
+.purl{
+  flex:1;background:rgba(255,255,255,0.1);border-radius:5px;
+  padding:3px 10px;font-size:10px;color:rgba(255,255,255,0.65);
+  font-family:'IBM Plex Mono',monospace;
+}
+.portal-body{display:flex;height:380px;}
+.psidebar{
+  width:168px;background:var(--navy);flex-shrink:0;
+  padding:14px 0;display:flex;flex-direction:column;gap:1px;
+}
+.psb-logo{padding:0 14px 12px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:6px;}
+.psb-logo-t{font-size:11px;font-weight:700;color:white;}
+.psb-logo-s{font-size:8px;color:rgba(255,255,255,0.4);}
+.pni{display:flex;align-items:center;gap:7px;padding:7px 14px;font-size:10px;color:rgba(255,255,255,0.5);cursor:pointer;font-weight:500;}
+.pni.on{background:rgba(255,255,255,0.1);color:white;border-left:3px solid var(--red);}
+.pni .ic{font-size:12px;width:16px;text-align:center;}
+.pmain{flex:1;background:var(--g5);padding:14px;overflow-y:auto;}
+.pm-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:10px;}
+
+/* table */
+.ptable{width:100%;border-collapse:collapse;}
+.ptable th{font-size:9px;font-weight:700;color:var(--g2);text-transform:uppercase;letter-spacing:0.4px;padding:5px 9px;background:white;border-bottom:1.5px solid var(--g3);text-align:left;}
+.ptable td{font-size:10px;color:var(--navy);padding:7px 9px;border-bottom:1px solid var(--g4);vertical-align:middle;}
+.ptable tr.sel td{background:#FFF7F7;}
+.ptable tr:hover td{background:white;}
+
+.pbadge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:100px;font-size:8px;font-weight:700;}
+.pb-pend{background:#FEF3C7;color:#92400E;}
+.pb-ok{background:#D1FAE5;color:#065F46;}
+.pb-rev{background:#DBEAFE;color:#1E40AF;}
+
+.dp{background:white;border-radius:10px;padding:12px;border:1.5px solid var(--g3);}
+.dp-title{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:9px;}
+.dp-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--g4);}
+.dp-row:last-of-type{border-bottom:none;}
+.dp-l{font-size:9px;color:var(--g2);}
+.dp-v{font-size:10px;font-weight:600;color:var(--navy);}
+
+.doc-thumb{width:56px;height:42px;border-radius:6px;background:var(--g4);border:1px solid var(--g3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.approve-btn{background:var(--grn);color:white;border:none;border-radius:8px;padding:8px 13px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:5px;}
+.reject-btn{background:white;color:var(--red);border:1.5px solid var(--red);border-radius:8px;padding:8px 13px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;}
+.audit-item{display:flex;align-items:flex-start;gap:7px;padding:7px 9px;background:white;border-radius:7px;margin-bottom:5px;}
+
+.portal-lbl{margin-top:10px;font-size:12px;font-weight:700;color:var(--navy);text-align:center;}
+.portal-sub{font-size:10px;color:var(--g2);text-align:center;margin-top:2px;}
+.conn-portal{display:flex;align-items:center;padding-top:170px;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<!-- ── PAGE HEADER ── -->
+<div class="phdr">
+  <div class="logo-box">📮</div>
+  <div class="hdr-t">
+    <h1>Thailand Post — QR Identity Wireframe</h1>
+    <p>Dipship + กล้องสาขา · ShareRing OCR · Issuer Portal Approval (ไม่ต้องต่อ API)</p>
+  </div>
+  <div class="hdr-tag">v4 · Transformational Co., Ltd.</div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  SWIM LANE DIAGRAM
+════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-hdr">
+    <span class="sec-pill" style="background:var(--navy);">Flow Overview</span>
+    <span class="sec-title">Swim Lane — 3 Actors · 7 Steps</span>
+    <span class="sec-note">— ตาม diagram จาก ShareRing</span>
+  </div>
+
+  <div class="swimlane">
+    <!-- Headers -->
+    <div class="lane-grid">
+      <div class="lane-hdr" style="background:#FFF1F1;color:var(--red);">👤 ผู้ใช้งาน (User)</div>
+      <div class="lane-hdr" style="background:#EFF6FF;color:var(--teal);">⚙️ ShareRing System</div>
+      <div class="lane-hdr" style="background:#FFFBEB;color:var(--gold);">🏢 Issuer Admin (THP Portal)</div>
+    </div>
+    <!-- Bodies -->
+    <div class="lane-grid">
+
+      <!-- User lane -->
+      <div class="lane-body" style="background:#FFFBFB;">
+        <div class="node" style="border-color:#FECACA;background:#FFF1F1;">
+          <div class="nnum" style="background:var(--red);">1</div>
+          <div>
+            <div class="nt" style="color:var(--red);">เลือกประเภทบัตร / VC</div>
+            <div class="ns" style="color:#B91C1C;">เปิดแอป → เลือก Thailand Post Identity</div>
+          </div>
+        </div>
+        <div class="vline"></div>
+        <div class="node" style="border-color:#FECACA;background:#FFF1F1;">
+          <div class="nnum" style="background:var(--red);">2</div>
+          <div>
+            <div class="nt" style="color:var(--red);">Dipship + Face Match ที่สาขา</div>
+            <div class="ns" style="color:#B91C1C;">
+              พนักงาน dipship บัตรประชาชน<br/>
+              กล้องหน้าสาขา capture ใบหน้า<br/>
+              <span style="font-weight:600;">ลูกค้าไม่ต้องกดอะไรในแอป</span>
+            </div>
+          </div>
+        </div>
+        <!-- spacer to align with step 3-4-5-6 -->
+        <div style="height:172px;display:flex;align-items:flex-end;">
+          <div style="width:100%;">
+            <div class="node" style="border-color:#BBF7D0;background:#F0FDF4;">
+              <div class="nnum" style="background:var(--grn);">7</div>
+              <div>
+                <div class="nt" style="color:var(--grn);">รับ Notification & ใช้ VC</div>
+                <div class="ns" style="color:#166534;">SMS แจ้ง → เปิดแอป → QR / Present<br/>แสดง QR แทนบัตรประชาชน</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ShareRing lane -->
+      <div class="lane-body" style="background:#F8FBFF;">
+        <div style="height:108px;"></div>
+        <div class="node" style="border-color:#BFDBFE;background:#EFF6FF;">
+          <div class="nnum" style="background:var(--teal);">3</div>
+          <div>
+            <div class="nt" style="color:var(--teal);">OCR & ดึงข้อมูลพื้นฐาน</div>
+            <div class="ns" style="color:#1E40AF;">Name / DOB / ID จาก dipship data</div>
+          </div>
+        </div>
+        <div class="vline"></div>
+        <div class="node" style="border-color:#BFDBFE;background:#EFF6FF;">
+          <div class="nnum" style="background:var(--teal);">4</div>
+          <div>
+            <div class="nt" style="color:var(--teal);">ส่ง Primary Info → Issuer Portal</div>
+            <div class="ns" style="color:#1E40AF;">Secure Channel · รอ Admin อนุมัติ</div>
+          </div>
+        </div>
+        <div class="vline"></div>
+        <div class="node" style="border-color:#BFDBFE;background:#EFF6FF;">
+          <div class="nnum" style="background:var(--teal);">6</div>
+          <div>
+            <div class="nt" style="color:var(--teal);">สร้าง & ส่ง VC กลับ</div>
+            <div class="ns" style="color:#1E40AF;">VC Issued → User Wallet<br/>Push SMS notification</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Issuer Admin lane -->
+      <div class="lane-body" style="background:#FFFDF5;">
+        <div style="height:232px;"></div>
+        <div class="node" style="border-color:#FDE68A;background:#FFFBEB;">
+          <div class="nnum" style="background:var(--gold);">5</div>
+          <div>
+            <div class="nt" style="color:var(--gold);">ตรวจสอบ & แนบเอกสาร</div>
+            <div class="ns" style="color:#92400E;">
+              เปิด Web Portal<br/>
+              ตรวจ dipship data + face score<br/>
+              แนบเอกสาร → กด อนุมัติ<br/>
+              <span style="font-weight:700;color:var(--gold);">ไม่ต้องต่อ API</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  JOURNEY 1 — USER (MOBILE)
+════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-hdr">
+    <span class="sec-pill" style="background:var(--red);">Journey 1</span>
+    <span class="sec-title">User — Mobile App</span>
+    <span class="sec-note">— Step 1 · 2 · 7 &nbsp;|&nbsp; ที่สาขา Thailand Post</span>
+  </div>
+
+  <div class="phones-row">
+
+    <!-- STEP 1: เลือกประเภท VC -->
+    <div class="unit">
+      <div style="display:flex;align-items:center;">
+        <div class="phone">
+          <div class="screen" style="background:linear-gradient(155deg,var(--red),var(--red2));">
+            <div class="notch" style="background:#28282F;"></div>
+            <div class="sb inv"><span>9:41</span><span>●●●</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden;">
+              <div style="position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,0.06);top:-45px;right:-35px;"></div>
+              <div style="width:58px;height:58px;background:white;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:14px;box-shadow:0 8px 20px rgba(0,0,0,0.25);">📮</div>
+              <div style="font-size:16px;font-weight:700;color:white;text-align:center;line-height:1.25;margin-bottom:5px;">เลือกประเภทบัตร / VC</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.6);text-align:center;margin-bottom:20px;">เลือก Credential ที่ต้องการ</div>
+              <!-- VC type cards -->
+              <div style="width:100%;background:white;border-radius:9px;padding:9px 11px;display:flex;align-items:center;gap:9px;margin-bottom:7px;border-left:3px solid var(--red);">
+                <div style="font-size:18px;">📮</div>
+                <div style="flex:1;">
+                  <div style="font-size:11px;font-weight:700;color:var(--navy);">Thailand Post Identity</div>
+                  <div style="font-size:9px;color:var(--g2);">QR แทนบัตรประชาชน</div>
+                </div>
+                <div style="font-size:12px;color:var(--red);">✓</div>
+              </div>
+              <div style="width:100%;background:rgba(255,255,255,0.12);border-radius:9px;padding:9px 11px;display:flex;align-items:center;gap:9px;margin-bottom:7px;">
+                <div style="font-size:18px;">🪪</div>
+                <div style="flex:1;">
+                  <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);">National ID</div>
+                  <div style="font-size:9px;color:rgba(255,255,255,0.4);">บัตรประชาชนดิจิทัล</div>
+                </div>
+              </div>
+              <div class="btn" style="background:white;color:var(--red);margin-top:4px;">→ ดำเนินการต่อ</div>
+            </div>
+          </div>
+        </div>
+        <div class="conn"><div style="display:flex;align-items:center;"><div class="cline"></div><div class="carrow">›</div></div></div>
+      </div>
+      <div class="unit-lbl">01 เลือกประเภท VC</div>
+      <div class="unit-sub">Step 1</div>
+    </div>
+
+    <!-- STEP 2a: ที่สาขา — Dipship -->
+    <div class="unit">
+      <div style="display:flex;align-items:center;">
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="sb"><span>9:44</span><span>●●●</span></div>
+            <div class="topbar">
+              <div class="back">←</div>
+              <div class="tbar-t">Dipship ที่เคาน์เตอร์</div>
+              <div class="tbar-r"></div>
+            </div>
+            <div class="body">
+              <div style="background:#FFF1F1;border-radius:9px;padding:9px;margin-bottom:8px;border-left:3px solid var(--red);">
+                <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:3px;">📍 ดำเนินการที่สาขา THP</div>
+                <div style="font-size:9px;color:#B91C1C;line-height:1.5;">แสดงหน้าจอนี้ให้พนักงาน<br/>พนักงานจะ dipship + face scan</div>
+              </div>
+
+              <!-- STEP 1: Dipship -->
+              <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:9px;padding:9px;background:white;border-radius:9px;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <div style="width:20px;height:20px;min-width:20px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;">1</div>
+                <div>
+                  <div style="font-size:11px;font-weight:600;color:var(--navy);">Dipship บัตรประชาชน</div>
+                  <div style="font-size:9px;color:var(--g2);margin-top:2px;line-height:1.4;">พนักงาน scan บัตร OCR<br/>ข้อมูลขึ้นระบบ ShareRing อัตโนมัติ</div>
+                  <div style="margin-top:5px;display:flex;gap:4px;">
+                    <span class="tag" style="background:#FEE2E2;color:var(--red);">Name ✓</span>
+                    <span class="tag" style="background:#FEE2E2;color:var(--red);">DOB ✓</span>
+                    <span class="tag" style="background:#FEE2E2;color:var(--red);">ID ✓</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STEP 2: Face via branch camera -->
+              <div style="display:flex;align-items:flex-start;gap:8px;padding:9px;background:white;border-radius:9px;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+                <div style="width:20px;height:20px;min-width:20px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;">2</div>
+                <div style="flex:1;">
+                  <div style="font-size:11px;font-weight:600;color:var(--navy);">Face Match — กล้องหน้าสาขา</div>
+                  <div style="font-size:9px;color:var(--g2);margin-top:2px;line-height:1.4;">มองตรงกล้องที่เคาน์เตอร์<br/>ไม่ใช้กล้องมือถือ</div>
+                  <!-- mini cam visual -->
+                  <div style="margin-top:6px;background:var(--navy);border-radius:7px;height:44px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+                    <div style="position:absolute;width:28px;height:36px;border:1.5px dashed rgba(204,0,0,0.6);border-radius:50%;"></div>
+                    <div style="font-size:16px;position:relative;z-index:1;">👤</div>
+                    <div style="position:absolute;bottom:4px;right:6px;font-size:7px;color:rgba(255,255,255,0.4);">BRANCH CAM</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="conn"><div style="display:flex;align-items:center;"><div class="cline"></div><div class="carrow">›</div></div></div>
+      </div>
+      <div class="unit-lbl">02 Dipship + กล้องสาขา</div>
+      <div class="unit-sub">Step 2 · พนักงานดำเนินการ</div>
+    </div>
+
+    <!-- STEP 2b: Pending / รอ Admin -->
+    <div class="unit">
+      <div style="display:flex;align-items:center;">
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="sb"><span>9:52</span><span>●●●</span></div>
+            <div class="topbar">
+              <div class="back" style="opacity:0;"></div>
+              <div class="tbar-t">ส่งข้อมูลสำเร็จ</div>
+              <div class="tbar-r"></div>
+            </div>
+            <div class="body" style="align-items:center;padding-top:12px;">
+              <div style="width:50px;height:50px;border-radius:50%;background:#FEF3C7;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:9px;">📤</div>
+              <div style="font-size:13px;font-weight:700;color:var(--navy);text-align:center;margin-bottom:4px;">ส่งข้อมูลให้ Admin แล้ว</div>
+              <div style="font-size:10px;color:var(--g2);text-align:center;line-height:1.6;margin-bottom:14px;">รอ Admin THP ตรวจสอบ<br/>และอนุมัติ VC</div>
+
+              <!-- Progress steps -->
+              <div style="width:100%;background:white;border-radius:10px;padding:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);margin-bottom:9px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+                  <div style="width:16px;height:16px;border-radius:50%;background:var(--grn);display:flex;align-items:center;justify-content:center;font-size:8px;color:white;flex-shrink:0;">✓</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--grn);">Dipship + Face scan เสร็จ</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+                  <div style="width:16px;height:16px;border-radius:50%;background:var(--grn);display:flex;align-items:center;justify-content:center;font-size:8px;color:white;flex-shrink:0;">✓</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--grn);">ShareRing OCR ประมวลผล</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+                  <div style="width:16px;height:16px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:8px;color:white;flex-shrink:0;">⏳</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--gold);">Admin THP กำลังตรวจสอบ</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:16px;height:16px;border-radius:50%;background:var(--g3);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--g2);flex-shrink:0;">4</div>
+                  <div style="font-size:10px;color:var(--g2);">รับ QR / VC</div>
+                </div>
+              </div>
+
+              <div style="width:100%;background:#FEF3C7;border-radius:8px;padding:8px 9px;display:flex;gap:7px;align-items:flex-start;">
+                <div style="font-size:13px;flex-shrink:0;">📱</div>
+                <div style="font-size:9px;color:#92400E;line-height:1.5;">จะได้รับ SMS เมื่อ QR พร้อม<br/>ภายใน 1 วันทำการ</div>
+              </div>
+            </div>
+            <div class="bnav">
+              <div class="bi on">🏠<span>หน้าหลัก</span><div class="bidot"></div></div>
+              <div class="bi">▦<span>QR</span></div>
+              <div class="bi">👤<span>โปรไฟล์</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="conn"><div style="display:flex;align-items:center;"><div class="cline"></div><div class="carrow">›</div></div></div>
+      </div>
+      <div class="unit-lbl">03 รอ Admin อนุมัติ</div>
+      <div class="unit-sub">Step 3–4 (ShareRing) · Step 5 (Admin)</div>
+    </div>
+
+    <!-- STEP 7a: SMS + QR Issued -->
+    <div class="unit">
+      <div style="display:flex;align-items:center;">
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="sb"><span>วันถัดไป</span><span>●●●</span></div>
+            <div class="topbar">
+              <div class="back" style="opacity:0;"></div>
+              <div class="tbar-t">QR พร้อมแล้ว!</div>
+              <div class="tbar-r"></div>
+            </div>
+            <div class="body">
+              <div class="vc">
+                <div class="vc-top">
+                  <div><div class="vc-iss">Issued by</div><div class="vc-org">📮 Thailand Post</div></div>
+                  <div class="vc-badge">✓ ACTIVE</div>
+                </div>
+                <div class="vc-name">นาย สมชาย ใจดี</div>
+                <div class="vc-id">THP-VC-2025-0042</div>
+                <div class="vc-foot">
+                  <div class="vc-exp">หมดอายุ <span>31 ธ.ค. 2569</span></div>
+                  <div style="display:flex;gap:3px;"><span class="tag tg">PDPA</span><span class="tag tb">W3C</span></div>
+                </div>
+              </div>
+              <div class="qr-wrap">
+                <svg width="84" height="84" viewBox="0 0 100 100">
+                  <rect width="100" height="100" fill="white"/>
+                  <rect x="5" y="5" width="26" height="26" rx="2" fill="#1A2B4A"/><rect x="9" y="9" width="18" height="18" rx="1" fill="white"/><rect x="12" y="12" width="12" height="12" rx="1" fill="#1A2B4A"/>
+                  <rect x="69" y="5" width="26" height="26" rx="2" fill="#1A2B4A"/><rect x="73" y="9" width="18" height="18" rx="1" fill="white"/><rect x="76" y="12" width="12" height="12" rx="1" fill="#1A2B4A"/>
+                  <rect x="5" y="69" width="26" height="26" rx="2" fill="#1A2B4A"/><rect x="9" y="73" width="18" height="18" rx="1" fill="white"/><rect x="12" y="76" width="12" height="12" rx="1" fill="#1A2B4A"/>
+                  <rect x="38" y="5" width="5" height="5" rx="1" fill="#1A2B4A"/><rect x="48" y="8" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="38" y="38" width="5" height="5" rx="1" fill="#CC0000"/><rect x="50" y="44" width="5" height="5" rx="1" fill="#CC0000"/>
+                  <rect x="56" y="36" width="5" height="5" rx="1" fill="#1A2B4A"/><rect x="68" y="48" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="38" y="72" width="5" height="5" rx="1" fill="#1A2B4A"/><rect x="60" y="78" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="43" y="43" width="14" height="14" rx="3" fill="white"/>
+                  <text x="50" y="53" font-size="9" text-anchor="middle" fill="#CC0000" font-weight="bold" font-family="sans-serif">P</text>
+                </svg>
+                <div style="font-size:10px;font-weight:700;color:var(--navy);">QR แทนบัตรประชาชน</div>
+                <div style="font-size:8px;color:var(--g2);">🔄 รีเฟรชทุก 30 วินาที</div>
+              </div>
+              <div class="btn btn-r" style="font-size:12px;">▦ &nbsp;แสดง QR เต็มจอ</div>
+            </div>
+          </div>
+        </div>
+        <div class="conn"><div style="display:flex;align-items:center;"><div class="cline"></div><div class="carrow">›</div></div></div>
+      </div>
+      <div class="unit-lbl">04 QR พร้อม ✓</div>
+      <div class="unit-sub">Step 7 · รับ SMS + ใช้ VC ได้เลย</div>
+    </div>
+
+    <!-- STEP 7b: แสดง QR เต็มจอ -->
+    <div class="unit">
+      <div style="display:flex;align-items:center;">
+        <div class="phone">
+          <div class="screen" style="background:var(--navy);">
+            <div class="notch" style="background:#28282F;"></div>
+            <div class="sb inv"><span>10:05</span><span>●●●</span></div>
+            <div class="topbar" style="background:var(--navy);">
+              <div class="back" style="background:rgba(255,255,255,0.1);color:white;">←</div>
+              <div class="tbar-t" style="color:white;">QR แทนบัตรประชาชน</div>
+              <div class="tbar-r"></div>
+            </div>
+            <div class="body" style="background:var(--navy);align-items:center;padding-top:8px;">
+              <div style="background:white;border-radius:14px;padding:14px 14px 11px;display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;margin-bottom:9px;">
+                <svg width="122" height="122" viewBox="0 0 100 100">
+                  <rect width="100" height="100" fill="white"/>
+                  <rect x="5" y="5" width="26" height="26" rx="2" fill="#1A2B4A"/><rect x="9" y="9" width="18" height="18" rx="1" fill="white"/><rect x="12" y="12" width="12" height="12" rx="1" fill="#1A2B4A"/>
+                  <rect x="69" y="5" width="26" height="26" rx="2" fill="#1A2B4A"/><rect x="73" y="9" width="18" height="18" rx="1" fill="white"/><rect x="76" y="12" width="12" height="12" rx="1" fill="#1A2B4A"/>
+                  <rect x="5" y="69" width="26" height="26" rx="2" fill="#1A2B4A"/><rect x="9" y="73" width="18" height="18" rx="1" fill="white"/><rect x="12" y="76" width="12" height="12" rx="1" fill="#1A2B4A"/>
+                  <rect x="38" y="5" width="5" height="5" rx="1" fill="#1A2B4A"/><rect x="48" y="8" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="58" y="5" width="5" height="5" rx="1" fill="#1A2B4A"/><rect x="68" y="12" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="38" y="38" width="5" height="5" rx="1" fill="#CC0000"/><rect x="50" y="44" width="5" height="5" rx="1" fill="#CC0000"/>
+                  <rect x="56" y="36" width="5" height="5" rx="1" fill="#CC0000"/><rect x="64" y="52" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="74" y="42" width="5" height="5" rx="1" fill="#1A2B4A"/><rect x="84" y="32" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="38" y="72" width="5" height="5" rx="1" fill="#1A2B4A"/><rect x="54" y="65" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="64" y="78" width="5" height="5" rx="1" fill="#1A2B4A"/><rect x="76" y="68" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="5" y="46" width="5" height="5" rx="1" fill="#1A2B4A"/><rect x="16" y="52" width="5" height="5" rx="1" fill="#1A2B4A"/>
+                  <rect x="43" y="43" width="14" height="14" rx="3" fill="white"/>
+                  <text x="50" y="53" font-size="9" text-anchor="middle" fill="#CC0000" font-weight="bold" font-family="sans-serif">P</text>
+                </svg>
+                <div style="font-size:11px;font-weight:700;color:var(--navy);">นาย สมชาย ใจดี</div>
+                <div style="display:flex;gap:4px;"><span class="tag tg">✓ Verified</span><span class="tag tb">PDPA Safe</span></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:7px 13px;display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:6px;">
+                <div style="font-size:9px;color:rgba(255,255,255,0.45);">🔄 รีเฟรชใน</div>
+                <div style="font-size:15px;font-weight:700;color:#FCA5A5;font-family:'IBM Plex Mono',monospace;">0:23</div>
+              </div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.28);text-align:center;">ให้พนักงาน scan · ไม่ต้องแสดงบัตร</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="unit-lbl" style="color:var(--red);font-weight:700;">05 แสดง QR ★</div>
+      <div class="unit-sub">ใช้แทนบัตรทุกครั้ง</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  JOURNEY 2 — ISSUER ADMIN WEB PORTAL
+════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-hdr">
+    <span class="sec-pill" style="background:var(--gold);">Journey 2</span>
+    <span class="sec-title">Issuer Admin — Web Portal</span>
+    <span class="sec-note">— Step 5 · ตรวจสอบ Request → แนบเอกสาร → อนุมัติ · ไม่ต้องต่อ API</span>
+  </div>
+
+  <div class="portal-row">
+
+    <!-- P1: Request Queue -->
+    <div>
+      <div class="portal-card">
+        <div class="portal-bar">
+          <div class="pdots">
+            <div class="pd" style="background:#FF5F57;"></div>
+            <div class="pd" style="background:#FEBC2E;"></div>
+            <div class="pd" style="background:#28C840;"></div>
+          </div>
+          <div class="purl">portal.thailandpost.th / issuer / requests</div>
+        </div>
+        <div class="portal-body">
+          <div class="psidebar">
+            <div class="psb-logo"><div style="font-size:16px;margin-bottom:3px;">📮</div><div class="psb-logo-t">THP Issuer</div><div class="psb-logo-s">Admin Portal</div></div>
+            <div class="pni on"><span class="ic">📋</span>VC Requests</div>
+            <div class="pni"><span class="ic">✅</span>อนุมัติแล้ว</div>
+            <div class="pni"><span class="ic">❌</span>ปฏิเสธแล้ว</div>
+            <div class="pni"><span class="ic">📊</span>Dashboard</div>
+            <div class="pni"><span class="ic">⚙️</span>Settings</div>
+          </div>
+          <div class="pmain">
+            <div class="pm-title">VC Requests — รอการอนุมัติ <span style="font-size:10px;font-weight:400;color:var(--g2);margin-left:4px;">3 รายการ</span></div>
+            <table class="ptable">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>ชื่อ–นามสกุล</th>
+                  <th>วันที่ยื่น</th>
+                  <th>สาขา</th>
+                  <th>Face Score</th>
+                  <th>สถานะ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="sel">
+                  <td style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--red);">REQ-0042</td>
+                  <td><strong>นาย สมชาย ใจดี</strong></td>
+                  <td style="font-size:9px;">09/03/68 09:50</td>
+                  <td style="font-size:9px;">สีลม</td>
+                  <td><span class="pbadge pb-ok">98.2%</span></td>
+                  <td><span class="pbadge pb-pend">⏳ รอตรวจ</span></td>
+                </tr>
+                <tr>
+                  <td style="font-family:'IBM Plex Mono',monospace;font-size:9px;">REQ-0041</td>
+                  <td>นางสาว วิภา ดีมาก</td>
+                  <td style="font-size:9px;">09/03/68 09:12</td>
+                  <td style="font-size:9px;">อโศก</td>
+                  <td><span class="pbadge pb-ok">96.7%</span></td>
+                  <td><span class="pbadge pb-rev">🔍 ตรวจสอบ</span></td>
+                </tr>
+                <tr>
+                  <td style="font-family:'IBM Plex Mono',monospace;font-size:9px;">REQ-0040</td>
+                  <td>นาย ประสิทธิ์ เก่งดี</td>
+                  <td style="font-size:9px;">08/03/68 15:30</td>
+                  <td style="font-size:9px;">ลาดพร้าว</td>
+                  <td><span class="pbadge pb-ok">99.1%</span></td>
+                  <td><span class="pbadge pb-ok">✓ อนุมัติ</span></td>
+                </tr>
+                <tr>
+                  <td style="font-family:'IBM Plex Mono',monospace;font-size:9px;">REQ-0039</td>
+                  <td>นาง มาลี สวยงาม</td>
+                  <td style="font-size:9px;">08/03/68 14:05</td>
+                  <td style="font-size:9px;">บางนา</td>
+                  <td><span class="pbadge" style="background:#FEE2E2;color:#991B1B;">72.1%</span></td>
+                  <td><span class="pbadge pb-pend">⏳ รอตรวจ</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="portal-lbl">P1 — Request Queue</div>
+      <div class="portal-sub">Admin เห็น requests ทั้งหมด + Face Score</div>
+    </div>
+
+    <!-- arrow -->
+    <div class="conn-portal"><div style="display:flex;align-items:center;"><div class="cline" style="width:16px;"></div><div class="carrow">›</div></div></div>
+
+    <!-- P2: Review Detail + Approve -->
+    <div>
+      <div class="portal-card">
+        <div class="portal-bar">
+          <div class="pdots">
+            <div class="pd" style="background:#FF5F57;"></div>
+            <div class="pd" style="background:#FEBC2E;"></div>
+            <div class="pd" style="background:#28C840;"></div>
+          </div>
+          <div class="purl">portal.thailandpost.th / issuer / requests / REQ-0042</div>
+        </div>
+        <div class="portal-body">
+          <div class="psidebar">
+            <div class="psb-logo"><div style="font-size:16px;margin-bottom:3px;">📮</div><div class="psb-logo-t">THP Issuer</div><div class="psb-logo-s">Admin Portal</div></div>
+            <div class="pni on"><span class="ic">📋</span>VC Requests</div>
+            <div class="pni"><span class="ic">✅</span>อนุมัติแล้ว</div>
+            <div class="pni"><span class="ic">❌</span>ปฏิเสธแล้ว</div>
+            <div class="pni"><span class="ic">📊</span>Dashboard</div>
+          </div>
+          <div class="pmain">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <div style="font-size:10px;color:var(--g2);cursor:pointer;">← กลับ</div>
+              <div class="pm-title" style="margin-bottom:0;">REQ-THP-2025-0042</div>
+              <span class="pbadge pb-pend" style="margin-left:auto;">⏳ รอตรวจสอบ</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+              <!-- dipship data -->
+              <div class="dp">
+                <div class="dp-title">📋 ข้อมูลจาก Dipship (OCR)</div>
+                <div class="dp-row"><span class="dp-l">ชื่อ–นามสกุล</span><span class="dp-v">นาย สมชาย ใจดี</span></div>
+                <div class="dp-row"><span class="dp-l">เลขบัตร</span><span class="dp-v" style="font-family:'IBM Plex Mono',monospace;font-size:9px;">1-1001-XXXXX-XX-X</span></div>
+                <div class="dp-row"><span class="dp-l">วันเกิด</span><span class="dp-v">1 ม.ค. 2530</span></div>
+                <div class="dp-row"><span class="dp-l">สาขา</span><span class="dp-v">สีลม · 09/03/68</span></div>
+                <div class="dp-row"><span class="dp-l">Face Match</span><span class="dp-v"><span class="pbadge pb-ok">✓ 98.2%</span></span></div>
+                <div class="dp-row"><span class="dp-l">กล้องสาขา</span><span class="dp-v" style="font-size:9px;">Branch Cam #SL-03</span></div>
+              </div>
+              <!-- docs + note -->
+              <div class="dp">
+                <div class="dp-title">📎 เอกสาร & หมายเหตุ</div>
+                <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px;">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                    <div class="doc-thumb">🪪</div>
+                    <div style="font-size:8px;color:var(--g2);">บัตรประชาชน</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                    <div class="doc-thumb">📸</div>
+                    <div style="font-size:8px;color:var(--g2);">Face Capture</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                    <div class="doc-thumb" style="border:1.5px dashed var(--g3);background:var(--g5);font-size:13px;">＋</div>
+                    <div style="font-size:8px;color:var(--g2);">แนบเอกสาร</div>
+                  </div>
+                </div>
+                <div style="font-size:9px;color:var(--g2);margin-bottom:3px;">หมายเหตุ Admin</div>
+                <textarea style="width:100%;background:var(--g4);border:1px solid var(--g3);border-radius:7px;padding:6px 8px;font-size:9px;color:var(--navy);font-family:inherit;resize:none;height:42px;" placeholder="พิมพ์หมายเหตุ (ถ้ามี)..."></textarea>
+              </div>
+            </div>
+            <!-- action row -->
+            <div style="display:flex;gap:7px;align-items:center;background:var(--g4);border-radius:9px;padding:9px 11px;">
+              <button class="approve-btn">✓ &nbsp;อนุมัติ — ออก VC</button>
+              <button class="reject-btn">✕ &nbsp;ปฏิเสธ</button>
+              <div style="margin-left:auto;font-size:9px;color:var(--g2);">ไม่ต้องต่อ API<br/>อนุมัติโดยตรงใน Portal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="portal-lbl">P2 — ตรวจสอบ & อนุมัติ</div>
+      <div class="portal-sub">Dipship data + Face score + แนบเอกสาร</div>
+    </div>
+
+    <!-- arrow -->
+    <div class="conn-portal"><div style="display:flex;align-items:center;"><div class="cline" style="width:16px;"></div><div class="carrow">›</div></div></div>
+
+    <!-- P3: VC Issued Success + Audit -->
+    <div>
+      <div class="portal-card">
+        <div class="portal-bar">
+          <div class="pdots">
+            <div class="pd" style="background:#FF5F57;"></div>
+            <div class="pd" style="background:#FEBC2E;"></div>
+            <div class="pd" style="background:#28C840;"></div>
+          </div>
+          <div class="purl">portal.thailandpost.th / issuer / approved / THP-VC-2025-0042</div>
+        </div>
+        <div class="portal-body">
+          <div class="psidebar">
+            <div class="psb-logo"><div style="font-size:16px;margin-bottom:3px;">📮</div><div class="psb-logo-t">THP Issuer</div><div class="psb-logo-s">Admin Portal</div></div>
+            <div class="pni"><span class="ic">📋</span>VC Requests</div>
+            <div class="pni on"><span class="ic">✅</span>อนุมัติแล้ว</div>
+            <div class="pni"><span class="ic">❌</span>ปฏิเสธแล้ว</div>
+            <div class="pni"><span class="ic">📊</span>Dashboard</div>
+          </div>
+          <div class="pmain">
+            <!-- success banner -->
+            <div style="background:#F0FDF4;border:1.5px solid #BBF7D0;border-radius:9px;padding:11px;margin-bottom:10px;display:flex;align-items:center;gap:9px;">
+              <div style="font-size:22px;">✅</div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--grn);">อนุมัติสำเร็จ — VC ออกแล้ว</div>
+                <div style="font-size:10px;color:#166534;margin-top:2px;">ShareRing ส่ง VC ไปยัง User Wallet · SMS แจ้งอัตโนมัติ</div>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+              <div class="dp">
+                <div class="dp-title">📜 VC Details</div>
+                <div class="dp-row"><span class="dp-l">VC ID</span><span class="dp-v" style="font-family:'IBM Plex Mono',monospace;font-size:9px;">THP-VC-2025-0042</span></div>
+                <div class="dp-row"><span class="dp-l">ออกให้</span><span class="dp-v">นาย สมชาย ใจดี</span></div>
+                <div class="dp-row"><span class="dp-l">วันที่ออก</span><span class="dp-v">10 มี.ค. 68 · 08:32</span></div>
+                <div class="dp-row"><span class="dp-l">หมดอายุ</span><span class="dp-v">31 ธ.ค. 2569</span></div>
+                <div class="dp-row"><span class="dp-l">อนุมัติโดย</span><span class="dp-v">สมศักดิ์ · สีลม</span></div>
+                <div class="dp-row"><span class="dp-l">สถานะ</span><span class="dp-v"><span class="pbadge pb-ok">✓ Active</span></span></div>
+              </div>
+              <!-- audit log -->
+              <div class="dp">
+                <div class="dp-title">📋 Audit Log</div>
+                <div class="audit-item"><div style="font-size:11px;">✅</div><div><div style="font-size:10px;font-weight:600;color:var(--grn);">VC Issued สำเร็จ</div><div style="font-size:8px;color:var(--g2);">10/03/68 08:32 · Auto-signed</div></div></div>
+                <div class="audit-item"><div style="font-size:11px;">👤</div><div><div style="font-size:10px;font-weight:600;color:var(--navy);">Admin อนุมัติ</div><div style="font-size:8px;color:var(--g2);">10/03/68 08:30 · สมศักดิ์</div></div></div>
+                <div class="audit-item"><div style="font-size:11px;">📤</div><div><div style="font-size:10px;font-weight:600;color:var(--navy);">ส่ง Secure Channel</div><div style="font-size:8px;color:var(--g2);">09/03/68 09:52 · ShareRing</div></div></div>
+                <div class="audit-item"><div style="font-size:11px;">📷</div><div><div style="font-size:10px;font-weight:600;color:var(--navy);">Face Capture (Branch Cam)</div><div style="font-size:8px;color:var(--g2);">09/03/68 09:48 · Score 98.2%</div></div></div>
+                <div class="audit-item"><div style="font-size:11px;">🪪</div><div><div style="font-size:10px;font-weight:600;color:var(--navy);">Dipship + OCR</div><div style="font-size:8px;color:var(--g2);">09/03/68 09:45 · สาขาสีลม</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="portal-lbl">P3 — Approved ✓ + Audit Log</div>
+      <div class="portal-sub">VC ออกแล้ว · SMS แจ้ง User · Log ครบ</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
